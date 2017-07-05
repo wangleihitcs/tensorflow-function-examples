@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorBlack">#000000</color>
+
+    <color name="colorTitileBackground">#FFFFFF</color> <!-- 白色 -->
+    <color name="colorTextMenu">#808080</color>
+
+
 </resources>
