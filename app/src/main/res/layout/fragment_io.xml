@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 第一部分，时间输入区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="时间"
+            android:textSize="20dp"
+            android:layout_margin="20dp"/>
+
+        <DatePicker
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"></DatePicker>
+
+    </LinearLayout>
+
+    <!-- 第二部分，类型:收入、支出 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="类型"
+            android:textSize="20dp"
+            android:layout_margin="20dp"/>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="类型"
+            android:orientation="horizontal">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收入"
+                android:checked="true"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支出"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"/>
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <!-- 第三部分，金额 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="金额"
+            android:textSize="20dp"
+            android:layout_margin="20dp"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:hint="请输入金额"
+            android:textSize="16dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <!-- 第四部分，说明收支具体原因 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="说明"
+        android:textSize="20dp"
+        android:layout_margin="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="详细说明"
+        android:textSize="16dp"
+        android:layout_weight="1"
+        android:layout_margin="20dp"/>
+
+    <!-- 第五部分，增加 -->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="增加"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

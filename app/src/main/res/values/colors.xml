@@ -7,6 +7,6 @@
 
     <color name="colorTitileBackground">#FFFFFF</color> <!-- 白色 -->
     <color name="colorTextMenu">#808080</color>
-
+    <color name="colorTabSelect">#87ceeb</color> <!-- 底部菜单文字选中的颜色 -->
 
 </resources>

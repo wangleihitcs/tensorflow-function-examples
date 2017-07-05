@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_menu_bookshelf"/>
+                android:src="@drawable/ic_menu_home"/>
 
             <TextView
                 android:id="@+id/textView_MenuHome"
@@ -51,14 +51,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_menu_star"/>
+                android:src="@drawable/ic_menu_io"/>
 
             <TextView
-                android:id="@+id/textView_MenuIO"
+                android:id="@+id/textView_MenuIo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="精选"
+                android:text="收支"
                 android:textColor="@color/colorTextMenu"/>
 
         </LinearLayout>
@@ -82,14 +82,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_menu_star"/>
+                android:src="@drawable/ic_menu_bill"/>
 
             <TextView
                 android:id="@+id/textView_MenuBill"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="精选"
+                android:text="账单"
                 android:textColor="@color/colorTextMenu"/>
 
         </LinearLayout>
