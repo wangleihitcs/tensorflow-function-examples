@@ -13,13 +13,13 @@ import com.example.wanglei.treasury.R;
  * 对应发现界面
  */
 
-public class FoundFragment extends Fragment {
+public class MoreFragment extends Fragment {
     private View foundFragmentLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        foundFragmentLayout = inflater.inflate(R.layout.fragment_found, container, false);
+        foundFragmentLayout = inflater.inflate(R.layout.fragment_more, container, false);
         return foundFragmentLayout;
     }
 

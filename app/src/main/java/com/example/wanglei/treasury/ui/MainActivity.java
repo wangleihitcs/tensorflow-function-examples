@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private HomeFragment homeFragment;
     private IoFragment ioFragment;
     private BillFragment billFragment;
-    private FoundFragment foundFragment;
+    private MoreFragment moreFragment;
 
     //对应底部四个菜单栏区域，图标+TextView,用于菜单的选中变色，没太大用处
     private View homeLayout, ioLayout, billLayout, foundLayout;
@@ -96,8 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(billFragment != null) {
             fragmentTransaction.hide(billFragment);
         }
-        if(foundFragment != null) {
-            fragmentTransaction.hide(foundFragment);
+        if(moreFragment != null) {
+            fragmentTransaction.hide(moreFragment);
         }
 
         //第三步，设置选中的底部菜单
@@ -131,11 +131,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             default://点击了"发现"
                 textView_menu_found.setTextColor(getResources().getColor(R.color.colorTabSelect));
-                if(foundFragment == null) {
-                    foundFragment = new FoundFragment();
-                    fragmentTransaction.add(R.id.content, foundFragment);
+                if(moreFragment == null) {
+                    moreFragment = new MoreFragment();
+                    fragmentTransaction.add(R.id.content, moreFragment);
                 } else {
-                    fragmentTransaction.show(foundFragment);
+                    fragmentTransaction.show(moreFragment);
                 }
                 break;
         }

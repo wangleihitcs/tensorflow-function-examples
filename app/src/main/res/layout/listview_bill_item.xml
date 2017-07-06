@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 账单界面账目信息,时间、类型、金额、说明 -->
+    <TextView
+        android:id="@+id/listView_bill_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="14dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/listView_bill_type"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="14dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/listView_bill_money"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="14dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/listView_bill_explain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="14dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1"/>
+
+
+</LinearLayout>

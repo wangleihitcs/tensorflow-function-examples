@@ -49,4 +49,25 @@
         android:background="@color/colorTextMenu"></LinearLayout>
 
     <!-- 第二部分,用户的收支统计表，折线图，圆饼图等 -->
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <lecho.lib.hellocharts.view.LineChartView
+                android:id="@+id/lineChart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_margin="10dp"
+                android:background="@color/colorTabSelect"/>
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>
