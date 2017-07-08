@@ -17,6 +17,7 @@
             android:layout_margin="20dp"/>
 
         <TextView
+            android:id="@+id/textView_date"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="2017-07-06"
@@ -24,8 +25,9 @@
             android:layout_margin="20dp"/>
 
         <DatePicker
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:visibility="gone"></DatePicker>
 
     </LinearLayout>
@@ -44,11 +46,13 @@
             android:layout_margin="20dp"/>
 
         <RadioGroup
+            android:id="@+id/radioGroup_type1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:contentDescription="类型"
             android:orientation="horizontal">
             <RadioButton
+                android:id="@+id/radioButton_in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="收入"
@@ -56,6 +60,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="20dp"/>
             <RadioButton
+                android:id="@+id/radioButton_out"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="支出"
@@ -79,6 +84,7 @@
             android:layout_margin="20dp"/>
 
         <EditText
+            android:id="@+id/editText_money"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:hint="请输入金额"
@@ -87,23 +93,30 @@
     </LinearLayout>
 
     <!-- 第四部分，说明收支具体原因 -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="说明"
-        android:textSize="20dp"
-        android:layout_margin="20dp"/>
-
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="详细说明"
-        android:textSize="16dp"
-        android:layout_weight="1"
-        android:layout_margin="20dp"/>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="说明"
+            android:textSize="20dp"
+            android:layout_margin="20dp"/>
+
+        <EditText
+            android:id="@+id/editText_explain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="详细说明"
+            android:textSize="16dp"
+            android:layout_weight="1"
+            android:layout_margin="20dp"/>
+    </LinearLayout>
 
     <!-- 第五部分，增加 -->
     <Button
+        android:id="@+id/button_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="增加"

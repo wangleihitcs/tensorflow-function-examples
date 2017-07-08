@@ -43,6 +43,10 @@ public class HomeFragment extends Fragment {
         lineChartView = (LineChartView) homeFragmentLayout.findViewById(R.id.lineChart);
     }
 
+    /**
+     * 最近五个月的折线图数据
+     *
+     */
     public void setLinerChartData() {
         int[] moneyIn = new int[] {1000, 3000, 2000, 1500, 2000};
         int[] moneyOut = new int[] {1200, 2000, 2000, 2500, 500};

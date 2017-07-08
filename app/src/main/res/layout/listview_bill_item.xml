@@ -9,15 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="14dp"
-        android:layout_margin="20dp"
-        android:layout_weight="1"/>
+        android:layout_margin="15dp"
+        android:layout_weight="0.9"/>
 
     <TextView
         android:id="@+id/listView_bill_type"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="14dp"
-        android:layout_margin="20dp"
+        android:layout_margin="15dp"
         android:layout_weight="1"/>
 
     <TextView
@@ -25,16 +25,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="14dp"
-        android:layout_margin="20dp"
-        android:layout_weight="1"/>
+        android:layout_margin="15dp"
+        android:layout_weight="0.9"/>
 
     <TextView
         android:id="@+id/listView_bill_explain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="14dp"
-        android:layout_margin="20dp"
-        android:layout_weight="1"/>
+        android:layout_margin="15dp"
+        android:layout_weight="0.8"/>
 
 
 </LinearLayout>

@@ -15,6 +15,19 @@ public class BillEntity {
     private String expalin; //说明
     private String username; //用户名
 
+    public BillEntity() {
+
+    }
+
+    public BillEntity(int billId, Date date, int type, int money, String expalin, String username) {
+        this.billId = billId;
+        this.date = date;
+        this.type = type;
+        this.money = money;
+        this.expalin = expalin;
+        this.username = username;
+    }
+
     public int getBillId() {
         return billId;
     }
@@ -61,5 +74,17 @@ public class BillEntity {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "BillEntity{" +
+                "billId=" + billId +
+                ", date=" + date +
+                ", type=" + type +
+                ", money=" + money +
+                ", expalin='" + expalin + '\'' +
+                ", username='" + username + '\'' +
+                '}';
     }
 }
