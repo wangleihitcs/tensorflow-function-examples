@@ -15,7 +15,9 @@ import android.widget.Toast;
 
 import com.example.wanglei.treasury.R;
 import com.example.wanglei.treasury.entity.BillEntity;
+import com.example.wanglei.treasury.service.SavaBill;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -32,6 +34,8 @@ public class IoFragment extends Fragment {
     private EditText editTextMoney;//金额
     private EditText editTextExplain;//说明
     private Button button_add;//增加
+
+    private SavaBill savaBill;
 
     //获取账单信息
     private BillEntity billEntity = new BillEntity();
@@ -79,6 +83,7 @@ public class IoFragment extends Fragment {
                 } else {
                     billEntity.setType(0);
                 }
+                billEntity.setBillId(System.currentTimeMillis()+"");
                 //获取金额
                 billEntity.setMoney(Integer.parseInt(editTextMoney.getText().toString()));
                 //获取说明
@@ -91,7 +96,13 @@ public class IoFragment extends Fragment {
                 /**
                  * 第二步,将账单增加到数据库
                  */
-                addBillEntityToBase();
+                try {
+                    addBillEntityToBase();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -113,7 +124,18 @@ public class IoFragment extends Fragment {
     /**
      * 增加账单信息billEntity处理
      */
-    public void addBillEntityToBase() {
+    public void addBillEntityToBase() throws SQLException, ClassNotFoundException {
+        savaBill = new SavaBill();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    savaBill.saveBill(billEntity);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
     }
 }

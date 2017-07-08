@@ -172,10 +172,10 @@ public class BillFragment extends Fragment {
     public void getListBillEntity() {
         //账单样例数据
         try {
-            BillEntity billEntity = new BillEntity(1111111, new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"), 0, 2333, "买手机", "zheng123");
+            BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"), 0, 2333, "买手机", "zheng123");
             listBillEntity.add(billEntity);
 
-            billEntity = new BillEntity(1111111, new SimpleDateFormat("yyyy-MM-dd").parse("2017-7-7"), 1, 10000, "工资到账", "zheng123");
+            billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-7-7"), 1, 10000, "工资到账", "zheng123");
             listBillEntity.add(billEntity);
         } catch (Exception e) {
             e.printStackTrace();
@@ -189,10 +189,10 @@ public class BillFragment extends Fragment {
         listBillEntity.clear();
         //账单样例数据
         try {
-            BillEntity billEntity = new BillEntity(1111111, new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"), 0, 2333, "买手机", "zheng123");
+            BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"), 0, 2333, "买手机", "zheng123");
             listBillEntity.add(billEntity);
 
-            billEntity = new BillEntity(1111111, new SimpleDateFormat("yyyy-MM-dd").parse("2017-7-7"), 1, 10000, "工资到账", "zheng123");
+            billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-7-7"), 1, 10000, "工资到账", "zheng123");
             listBillEntity.add(billEntity);
         } catch (Exception e) {
             e.printStackTrace();
@@ -206,7 +206,7 @@ public class BillFragment extends Fragment {
         listBillEntity.clear();
         //账单样例数据
         try {
-            BillEntity billEntity = new BillEntity(1111111, new SimpleDateFormat("yyyy-MM-dd").parse("2017-7-7"), 1, 10000, "工资到账", "zheng123");
+            BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-7-7"), 1, 10000, "工资到账", "zheng123");
             listBillEntity.add(billEntity);
         } catch (Exception e) {
             e.printStackTrace();

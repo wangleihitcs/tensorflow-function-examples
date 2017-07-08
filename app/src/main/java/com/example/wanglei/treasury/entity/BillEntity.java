@@ -8,10 +8,10 @@ import java.util.Date;
  */
 
 public class BillEntity {
-    private int billId; //账单编号
+    private String billId; //账单编号
     private Date date; //日期
     private int type; //类型，1收入,0支出
-    private int money; //金额
+    private double money; //金额
     private String expalin; //说明
     private String username; //用户名
 
@@ -19,7 +19,7 @@ public class BillEntity {
 
     }
 
-    public BillEntity(int billId, Date date, int type, int money, String expalin, String username) {
+    public BillEntity(String billId, Date date, int type, int money, String expalin, String username) {
         this.billId = billId;
         this.date = date;
         this.type = type;
@@ -28,11 +28,11 @@ public class BillEntity {
         this.username = username;
     }
 
-    public int getBillId() {
+    public String getBillId() {
         return billId;
     }
 
-    public void setBillId(int billId) {
+    public void setBillId(String billId) {
         this.billId = billId;
     }
 
@@ -52,11 +52,11 @@ public class BillEntity {
         this.type = type;
     }
 
-    public int getMoney() {
+    public double getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(double money) {
         this.money = money;
     }
 
