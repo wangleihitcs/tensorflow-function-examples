@@ -19,7 +19,7 @@ public class BillEntity {
 
     }
 
-    public BillEntity(String billId, Date date, int type, int money, String expalin, String username) {
+    public BillEntity(String billId, Date date, double money, String expalin, int type, String username) {
         this.billId = billId;
         this.date = date;
         this.type = type;

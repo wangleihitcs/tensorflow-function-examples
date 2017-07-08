@@ -16,7 +16,11 @@ import android.widget.Toast;
 
 import com.example.wanglei.treasury.R;
 import com.example.wanglei.treasury.entity.BillEntity;
+import com.example.wanglei.treasury.service.QueryBill;
+import com.example.wanglei.treasury.service.SavaBill;
 
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,6 +49,9 @@ public class BillFragment extends Fragment {
     private RadioButton radioButton;//类型,收入、支出
     private Button buttonAckDate, buttonAckType;
 
+    private QueryBill queryBill;
+    private ArrayList<ArrayList<String>> recordList = new ArrayList<ArrayList<String>>();
+
 
     //该用户所有账单信息列表
     List<BillEntity> listBillEntity = new ArrayList<BillEntity>();
@@ -54,7 +61,7 @@ public class BillFragment extends Fragment {
         billFragmentLayout = inflater.inflate(R.layout.fragment_bill, container, false);
 
         initViews();
-        getListBillEntity();
+        getListBillEntityByDate("2017-07-01", "2017-07-30");
         getData();
 
         //listView设置适配器
@@ -108,10 +115,12 @@ public class BillFragment extends Fragment {
                 //获取类型
                 radioButton = (RadioButton) billFragmentLayout.findViewById(radioGroup.getCheckedRadioButtonId());
                 if("收入".equals(radioButton.getText().toString())) {
-                    getListBillEntityByType("收入");
+                    getListBillEntityByType("1");
                 } else {
-                    getListBillEntityByType("支出");
+                    getListBillEntityByType("0");
                 }
+
+
                 getData();
                 //listView设置适配器
                 simpleAdapter = new SimpleAdapter(billFragmentLayout.getContext(), listViewData, R.layout.listview_bill_item, key, listViewId);
@@ -172,11 +181,47 @@ public class BillFragment extends Fragment {
     public void getListBillEntity() {
         //账单样例数据
         try {
-            BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"), 0, 2333, "买手机", "zheng123");
+            BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"),  2333, "买手机", 0,"zheng123");
             listBillEntity.add(billEntity);
 
-            billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-7-7"), 1, 10000, "工资到账", "zheng123");
+            billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-7-7"),  10000, "工资到账", 1,"zheng123");
             listBillEntity.add(billEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 根据起始时间、终止时间的到账单信息
+     */
+    public void getListBillEntityByDateAndType(String begin, String end, String type) {
+        listBillEntity.clear();
+        //账单样例数据
+        try {
+
+            queryBill = new QueryBill();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    recordList.clear();
+                    try {
+                        recordList = queryBill.query(begin, end, type);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+            for (ArrayList<String> record: recordList) {
+                //   BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"), 0, 2333, "买手机", "zheng123");
+                BillEntity billEntity = null;
+                try {
+                    billEntity = new BillEntity(record.get(0), new SimpleDateFormat("yyyy-MM-dd").parse(record.get(1)),
+                            Double.parseDouble(record.get(2)), record.get(3), Integer.parseInt(record.get(4)), record.get(5));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                listBillEntity.add(billEntity);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -189,11 +234,38 @@ public class BillFragment extends Fragment {
         listBillEntity.clear();
         //账单样例数据
         try {
-            BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"), 0, 2333, "买手机", "zheng123");
-            listBillEntity.add(billEntity);
+//            BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"),  2333, "买手机", 0,"zheng123");
+//            listBillEntity.add(billEntity);
+//
+//            billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-7-7"),  10000, "工资到账", 1,"zheng123");
+//            listBillEntity.add(billEntity);
 
-            billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-7-7"), 1, 10000, "工资到账", "zheng123");
-            listBillEntity.add(billEntity);
+            queryBill = new QueryBill();
+            new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+                    recordList.clear();
+                    try {
+                        recordList = queryBill.query(begin, end);
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+            for (ArrayList<String> record: recordList) {
+                //   BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"), 0, 2333, "买手机", "zheng123");
+                BillEntity billEntity = null;
+                try {
+                    billEntity = new BillEntity(record.get(0), new SimpleDateFormat("yyyy-MM-dd").parse(record.get(1)),
+                            Double.parseDouble(record.get(2)), record.get(3), Integer.parseInt(record.get(4)), record.get(5));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                listBillEntity.add(billEntity);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -206,8 +278,32 @@ public class BillFragment extends Fragment {
         listBillEntity.clear();
         //账单样例数据
         try {
-            BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-7-7"), 1, 10000, "工资到账", "zheng123");
-            listBillEntity.add(billEntity);
+            //BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-7-7"), 10000, "工资到账", 1,  "zheng123");
+            queryBill = new QueryBill();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    recordList.clear();
+                    try {
+                        recordList = queryBill.query(type);
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+            for (ArrayList<String> record: recordList) {
+                //   BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"), 0, 2333, "买手机", "zheng123");
+                BillEntity billEntity = null;
+                try {
+                    billEntity = new BillEntity(record.get(0), new SimpleDateFormat("yyyy-MM-dd").parse(record.get(1)),
+                            Double.parseDouble(record.get(2)), record.get(3), Integer.parseInt(record.get(4)), record.get(5));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                listBillEntity.add(billEntity);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

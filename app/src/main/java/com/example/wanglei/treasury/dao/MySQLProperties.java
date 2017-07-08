@@ -30,8 +30,7 @@ public class MySQLProperties {
 		//备份文件路径
 		filepath = "./treasury.sql";
 		url = "jdbc:mysql://"+ servername +":" +
-				serverport + "/" + databasename;
-
+				serverport + "/" + databasename + "?useSSL=true";
 	}
 	
 	public String getServername() {
