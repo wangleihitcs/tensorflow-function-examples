@@ -48,7 +48,7 @@ public class BillFragment extends Fragment {
     private DatePicker datePicker_bill; //日期
     private RadioGroup radioGroup;//类型
     private RadioButton radioButton;//类型,收入、支出
-    private Button buttonAckDate, buttonAckType;
+    private Button buttonAckDate, buttonAckType, buttonAckDateAndType;
 
     private QueryBill queryBill;
     private ArrayList<ArrayList<String>> recordList = new ArrayList<ArrayList<String>>();
@@ -142,6 +142,26 @@ public class BillFragment extends Fragment {
             }
         });
 
+        //根据截止日期和类型筛选账单信息
+        buttonAckDateAndType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //获取时间
+                String billDateBeigin = textView_begin.getText().toString();
+                String billDateEnd = textView_end.getText().toString();
+
+                //获取类型
+                radioButton = (RadioButton) billFragmentLayout.findViewById(radioGroup.getCheckedRadioButtonId());
+                String billType = radioButton.getText().toString();
+
+                getListBillEntityByDateAndType(billDateBeigin, billDateEnd, billType);
+                getData();
+                //listView设置适配器
+                simpleAdapter = new SimpleAdapter(billFragmentLayout.getContext(), listViewData, R.layout.listview_bill_item, key, listViewId);
+                listView.setAdapter(simpleAdapter);
+            }
+        });
+
         return billFragmentLayout;
     }
 
@@ -156,7 +176,7 @@ public class BillFragment extends Fragment {
         radioGroup = (RadioGroup) billFragmentLayout.findViewById(R.id.radioGroup_type2);
         buttonAckDate = (Button) billFragmentLayout.findViewById(R.id.button_ackdate);
         buttonAckType = (Button) billFragmentLayout.findViewById(R.id.button_acktype);
-
+        buttonAckDateAndType = (Button) billFragmentLayout.findViewById(R.id.button_ackdateandtype);
     }
     /**
      * 获得账单listview数据
@@ -205,6 +225,7 @@ public class BillFragment extends Fragment {
     }
 
     /**
+     * 查询1
      * 根据起始时间、终止时间的到账单信息
      */
     public void getListBillEntityByDateAndType(String begin, String end, String type) {
@@ -226,6 +247,7 @@ public class BillFragment extends Fragment {
             }).start();
 //            String sss = recordList.get(0).get(1);
 //            Toast.makeText(billFragmentLayout.getContext(), sss, Toast.LENGTH_LONG).show();
+            Thread.currentThread().sleep(200);
             for (ArrayList<String> record: recordList) {
                 //   BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"), 0, 2333, "买手机", "zheng123");
                 BillEntity billEntity = null;
@@ -239,6 +261,7 @@ public class BillFragment extends Fragment {
     }
 
     /**
+     * 查询2
      * 根据起始时间、终止时间的到账单信息
      */
     public void getListBillEntityByDate(String begin, String end) {
@@ -268,6 +291,7 @@ public class BillFragment extends Fragment {
             }).start();
 //            String sss = recordList.get(0).get(1);
 //            Toast.makeText(billFragmentLayout.getContext(), sss, Toast.LENGTH_LONG).show();
+            Thread.currentThread().sleep(200);
             for (ArrayList<String> record: recordList) {
                 BillEntity billEntity = null;
                 billEntity = new BillEntity(record.get(0), record.get(1),
@@ -280,6 +304,7 @@ public class BillFragment extends Fragment {
     }
 
     /**
+     * 查询3
      * 根据类型得到账单信息
      */
     public void getListBillEntityByType(String type) {

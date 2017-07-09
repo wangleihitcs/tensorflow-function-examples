@@ -39,15 +39,17 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="确认"
-            android:textSize="16dp"/>
-
-        <DatePicker
-            android:id="@+id/datePicker_bill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"></DatePicker>
+            android:textSize="16dp"
+            android:visibility="gone"/>
 
     </LinearLayout>
+
+    <DatePicker
+        android:id="@+id/datePicker_bill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center"></DatePicker>
 
     <!-- 第二部分，类型:收入、支出查询 -->
     <LinearLayout
@@ -90,9 +92,18 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="确认"
-            android:textSize="16dp"/>
+            android:textSize="16dp"
+            android:visibility="gone"/>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button_ackdateandtype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="确认"
+        android:textSize="16dp"
+        android:layout_gravity="center"/>
 
     <!-- 分割线 -->
     <LinearLayout

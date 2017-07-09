@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <!-- 主页标题栏 -->
-    <include layout="@layout/activity_main_title"></include>
+    <include layout="@layout/main_title"></include>
 
     <FrameLayout
         android:id="@+id/content"
@@ -14,6 +14,6 @@
     </FrameLayout>
 
     <!-- 底部菜单栏 -->
-    <include layout="@layout/activity_main_bottommenu"></include>
+    <include layout="@layout/main_bottommenu"></include>
 
 </LinearLayout>

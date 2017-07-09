@@ -70,7 +70,7 @@ public class IoFragment extends Fragment {
                  * 第一步,得到账单信息
                  */
                 //获取时间
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     billEntity.setDate(textView.getText().toString());
                 } catch (Exception e) {
@@ -84,25 +84,30 @@ public class IoFragment extends Fragment {
                     billEntity.setType(0);
                 }
                 billEntity.setBillId(System.currentTimeMillis()+"");
-                //获取金额
-                billEntity.setMoney(Integer.parseInt(editTextMoney.getText().toString()));
-                //获取说明
-                billEntity.setExpalin(editTextExplain.getText().toString());
                 //获取用户名
                 billEntity.setUsername("zheng123");
+                if(!editTextMoney.getText().toString().equals("")  && !editTextExplain.getText().toString().equals("")) {
+                    //获取金额
+                    billEntity.setMoney(Integer.parseInt(editTextMoney.getText().toString()));
+                    //获取说明
+                    billEntity.setExpalin(editTextExplain.getText().toString());
 
-                Toast.makeText(ioFragmentLayout.getContext(),billEntity.toString(), Toast.LENGTH_LONG).show();
+                    /**
+                     * 第二步,将账单增加到数据库
+                     */
+                    try {
+                        addBillEntityToBase();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
 
-                /**
-                 * 第二步,将账单增加到数据库
-                 */
-                try {
-                    addBillEntityToBase();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+                } else {
+                    Toast.makeText(ioFragmentLayout.getContext(),"金额和备注不能为空！", Toast.LENGTH_LONG).show();
                 }
+
+
             }
         });
 

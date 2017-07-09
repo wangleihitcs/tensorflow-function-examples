@@ -24,13 +24,14 @@
             android:textSize="20dp"
             android:layout_margin="20dp"/>
 
-        <DatePicker
-            android:id="@+id/datePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"></DatePicker>
-
     </LinearLayout>
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center"></DatePicker>
 
     <!-- 第二部分，类型:收入、支出 -->
     <LinearLayout
@@ -89,7 +90,8 @@
             android:layout_height="match_parent"
             android:hint="请输入金额"
             android:textSize="16dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_margin="20dp"/>
     </LinearLayout>
 
     <!-- 第四部分，说明收支具体原因 -->
@@ -100,7 +102,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="说明"
+            android:text="备注"
             android:textSize="20dp"
             android:layout_margin="20dp"/>
 
@@ -108,7 +110,7 @@
             android:id="@+id/editText_explain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="详细说明"
+            android:hint="请输入备注"
             android:textSize="16dp"
             android:layout_weight="1"
             android:layout_margin="20dp"/>
