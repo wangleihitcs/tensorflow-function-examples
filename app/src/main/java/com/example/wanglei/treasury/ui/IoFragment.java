@@ -72,7 +72,7 @@ public class IoFragment extends Fragment {
                 //获取时间
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 try {
-                    billEntity.setDate(simpleDateFormat.parse(textView.getText().toString()));
+                    billEntity.setDate(textView.getText().toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

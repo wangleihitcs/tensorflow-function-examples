@@ -20,6 +20,7 @@ import com.example.wanglei.treasury.service.QueryBill;
 import com.example.wanglei.treasury.service.SavaBill;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -105,6 +106,8 @@ public class BillFragment extends Fragment {
                 //listView设置适配器
                 simpleAdapter = new SimpleAdapter(billFragmentLayout.getContext(), listViewData, R.layout.listview_bill_item, key, listViewId);
                 listView.setAdapter(simpleAdapter);
+                Toast.makeText(billFragmentLayout.getContext(),"你麻痹日期", Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -115,18 +118,27 @@ public class BillFragment extends Fragment {
                 //获取类型
                 radioButton = (RadioButton) billFragmentLayout.findViewById(radioGroup.getCheckedRadioButtonId());
                 if("收入".equals(radioButton.getText().toString())) {
+
                     getListBillEntityByType("1");
+
+                    getData();
+                    //listView设置适配器
+                    simpleAdapter = new SimpleAdapter(billFragmentLayout.getContext(), listViewData, R.layout.listview_bill_item, key, listViewId);
+                    listView.setAdapter(simpleAdapter);
+
+//                    Toast.makeText(billFragmentLayout.getContext(),"你麻痹收入", Toast.LENGTH_LONG).show();
                 } else {
                     getListBillEntityByType("0");
+
+                    getData();
+                    //listView设置适配器
+                    simpleAdapter = new SimpleAdapter(billFragmentLayout.getContext(), listViewData, R.layout.listview_bill_item, key, listViewId);
+                    listView.setAdapter(simpleAdapter);
+
+//                    Toast.makeText(billFragmentLayout.getContext(),"你麻痹支出", Toast.LENGTH_LONG).show();
                 }
 
 
-                getData();
-                //listView设置适配器
-                simpleAdapter = new SimpleAdapter(billFragmentLayout.getContext(), listViewData, R.layout.listview_bill_item, key, listViewId);
-                listView.setAdapter(simpleAdapter);
-
-                Toast.makeText(billFragmentLayout.getContext(),"你麻痹", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -162,8 +174,9 @@ public class BillFragment extends Fragment {
 
         for(int i = 0; i < listBillEntity.size(); i++) {
             map = new HashMap<String, Object>();
-            calendar.setTime(listBillEntity.get(i).getDate());
-            map.put("time", calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH));
+//            calendar.setTime(listBillEntity.get(i).getDate());
+//            map.put("time", calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH));
+            map.put("time", listBillEntity.get(i).getDate());
             if(listBillEntity.get(i).getType() == 1) {
                 map.put("type", "收入");
             } else {
@@ -181,10 +194,10 @@ public class BillFragment extends Fragment {
     public void getListBillEntity() {
         //账单样例数据
         try {
-            BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"),  2333, "买手机", 0,"zheng123");
+            BillEntity billEntity = new BillEntity("1111111","2017-05-17",  2333, "买手机", 0,"zheng123");
             listBillEntity.add(billEntity);
 
-            billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-7-7"),  10000, "工资到账", 1,"zheng123");
+            billEntity = new BillEntity("1111111", "2017-7-7",  10000, "工资到账", 1,"zheng123");
             listBillEntity.add(billEntity);
         } catch (Exception e) {
             e.printStackTrace();
@@ -211,15 +224,13 @@ public class BillFragment extends Fragment {
                     }
                 }
             }).start();
+//            String sss = recordList.get(0).get(1);
+//            Toast.makeText(billFragmentLayout.getContext(), sss, Toast.LENGTH_LONG).show();
             for (ArrayList<String> record: recordList) {
                 //   BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"), 0, 2333, "买手机", "zheng123");
                 BillEntity billEntity = null;
-                try {
-                    billEntity = new BillEntity(record.get(0), new SimpleDateFormat("yyyy-MM-dd").parse(record.get(1)),
-                            Double.parseDouble(record.get(2)), record.get(3), Integer.parseInt(record.get(4)), record.get(5));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                billEntity = new BillEntity(record.get(0), record.get(1),
+                        Double.parseDouble(record.get(2)), record.get(3), Integer.parseInt(record.get(4)), record.get(5));
                 listBillEntity.add(billEntity);
             }
         } catch (Exception e) {
@@ -255,15 +266,12 @@ public class BillFragment extends Fragment {
                     }
                 }
             }).start();
+//            String sss = recordList.get(0).get(1);
+//            Toast.makeText(billFragmentLayout.getContext(), sss, Toast.LENGTH_LONG).show();
             for (ArrayList<String> record: recordList) {
-                //   BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"), 0, 2333, "买手机", "zheng123");
                 BillEntity billEntity = null;
-                try {
-                    billEntity = new BillEntity(record.get(0), new SimpleDateFormat("yyyy-MM-dd").parse(record.get(1)),
-                            Double.parseDouble(record.get(2)), record.get(3), Integer.parseInt(record.get(4)), record.get(5));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                billEntity = new BillEntity(record.get(0), record.get(1),
+                        Double.parseDouble(record.get(2)), record.get(3), Integer.parseInt(record.get(4)), record.get(5));
                 listBillEntity.add(billEntity);
             }
         } catch (Exception e) {
@@ -286,22 +294,29 @@ public class BillFragment extends Fragment {
                     recordList.clear();
                     try {
                         recordList = queryBill.query(type);
+
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
+//                    Toast.makeText(billFragmentLayout.getContext(),"你麻痹xiancheng", Toast.LENGTH_LONG).show();
+
                 }
             }).start();
+//            String sss = recordList.get(0).get(1);
+//            Toast.makeText(billFragmentLayout.getContext(), sss, Toast.LENGTH_LONG).show();
+
+            Thread.currentThread().sleep(200);
+
+            Toast.makeText(billFragmentLayout.getContext(),"你麻痹xiancheng", Toast.LENGTH_LONG).show();
             for (ArrayList<String> record: recordList) {
                 //   BillEntity billEntity = new BillEntity("1111111", new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-17"), 0, 2333, "买手机", "zheng123");
                 BillEntity billEntity = null;
-                try {
-                    billEntity = new BillEntity(record.get(0), new SimpleDateFormat("yyyy-MM-dd").parse(record.get(1)),
-                            Double.parseDouble(record.get(2)), record.get(3), Integer.parseInt(record.get(4)), record.get(5));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                DateFormat datef = new SimpleDateFormat("yyyy-MM-dd");
+
+                billEntity = new BillEntity(record.get(0), record.get(1),
+                        Double.parseDouble(record.get(2)), record.get(3), Integer.parseInt(record.get(4)), record.get(5));
                 listBillEntity.add(billEntity);
             }
         } catch (Exception e) {

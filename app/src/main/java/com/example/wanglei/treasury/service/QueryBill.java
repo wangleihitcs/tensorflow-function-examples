@@ -58,7 +58,12 @@ public class QueryBill {
             ArrayList<String> record = new ArrayList<String>();
             int n = 6;
             for (int i = 1; i <= n; i++) {
-                record.add(rs.getString(i));
+                if (i == 2) {
+                    record.add(rs.getDate(i).toString());
+                }
+                else{
+                    record.add(rs.getString(i));
+                }
             }
 
             recordList.add(record);
