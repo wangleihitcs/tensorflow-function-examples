@@ -6,6 +6,7 @@
     android:padding="10dip">
 
     <ImageView
+        android:id="@+id/imageView_back"
         android:layout_width="23dp"
         android:layout_height="32dp"
         android:src="@drawable/ic_title_back"

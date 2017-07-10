@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     private Context context;
 
+    private ImageView imageViewBack;//返回图标
+    private TextView textViewRegist;
     private EditText editText_username, editText_password; //用户名、密码
     private UserEntity userEntity = new UserEntity();
 
@@ -57,9 +60,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         mName = (LinearLayout) findViewById(R.id.input_layout_name);
         mPsw = (LinearLayout) findViewById(R.id.input_layout_psw);
 
+        textViewRegist = (TextView) findViewById(R.id.main_btn_regist);
+        imageViewBack = (ImageView) findViewById(R.id.imageView_back);
         editText_username = (EditText) findViewById(R.id.editText_username);
         editText_password = (EditText) findViewById(R.id.editText_password);
 
+        textViewRegist.setOnClickListener(this);
+        imageViewBack.setOnClickListener(this);
         mBtnLogin.setOnClickListener(this);
     }
 
@@ -95,8 +102,14 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     }
                 }
                 break;
+            //返回
+            case R.id.imageView_back:
+                finish();
+                break;
             //注册
             case R.id.main_btn_regist:
+                Intent i = new Intent(LoginActivity.this, RegistActivity.class);
+                startActivity(i);
                 break;
         }
     }

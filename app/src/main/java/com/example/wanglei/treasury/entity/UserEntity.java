@@ -9,6 +9,15 @@ public class UserEntity {
     private String userpassword; //密码
     private String name; //姓名
 
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "username='" + username + '\'' +
+                ", userpassword='" + userpassword + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     public String getUsername() {
         return username;
     }

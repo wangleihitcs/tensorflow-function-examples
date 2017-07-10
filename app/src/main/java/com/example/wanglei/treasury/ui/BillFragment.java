@@ -69,15 +69,18 @@ public class BillFragment extends Fragment {
         simpleAdapter = new SimpleAdapter(billFragmentLayout.getContext(), listViewData, R.layout.listview_bill_item, key, listViewId);
         listView.setAdapter(simpleAdapter);
 
+        Calendar calendar = Calendar.getInstance();
+        textView_begin.setText(calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH));
+        textView_end.setText(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-"+calendar.get(Calendar.DAY_OF_MONTH));
         //点击日期控件出现
         textView_begin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 datePicker_bill.setVisibility(View.VISIBLE);
-                datePicker_bill.init(2017, 7, 7, new DatePicker.OnDateChangedListener() {
+                datePicker_bill.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        textView_begin.setText(year+"-"+monthOfYear+"-"+dayOfMonth);
+                        textView_begin.setText(year+"-"+(monthOfYear+1)+"-"+dayOfMonth);
                         datePicker_bill.setVisibility(View.GONE);
                     }
                 });
@@ -87,10 +90,10 @@ public class BillFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 datePicker_bill.setVisibility(View.VISIBLE);
-                datePicker_bill.init(2017, 12, 31, new DatePicker.OnDateChangedListener() {
+                datePicker_bill.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        textView_end.setText(year+"-"+monthOfYear+"-"+dayOfMonth);
+                        textView_end.setText(year+"-"+(monthOfYear+1)+"-"+dayOfMonth);
                         datePicker_bill.setVisibility(View.GONE);
                     }
                 });

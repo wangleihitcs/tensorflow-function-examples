@@ -19,6 +19,7 @@ import com.example.wanglei.treasury.service.SavaBill;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by wanglei on 2017/7/6.
@@ -47,15 +48,17 @@ public class IoFragment extends Fragment {
 
         initViews();
 
+        Calendar calendar = Calendar.getInstance();
+        textView.setText(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-"+calendar.get(Calendar.DAY_OF_MONTH));
         //点击日期控件出现
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 datePicker.setVisibility(View.VISIBLE);
-                datePicker.init(2017, 7, 7, new DatePicker.OnDateChangedListener() {
+                datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        textView.setText(year+"-"+monthOfYear+"-"+dayOfMonth);
+                        textView.setText(year+"-"+(monthOfYear+1)+"-"+dayOfMonth);
                         datePicker.setVisibility(View.GONE);
                     }
                 });
