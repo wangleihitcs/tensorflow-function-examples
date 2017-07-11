@@ -65,6 +65,10 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
 
             Toast.makeText(userFragmentLayout.getContext(), "修改成功", Toast.LENGTH_LONG).show();
 
+            Intent i = new Intent(userFragmentLayout.getContext(), MainActivity.class);
+            i.putExtra("name", userEntity.getName());
+            i.putExtra("username", userEntity.getUsername());
+            startActivity(i);
         }
     }
 

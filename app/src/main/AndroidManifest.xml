@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".ui.RegistActivity">
         </activity>
+        <activity android:name=".ui.ManageMoneyActivity">
+        </activity>
     </application>
 
 </manifest>

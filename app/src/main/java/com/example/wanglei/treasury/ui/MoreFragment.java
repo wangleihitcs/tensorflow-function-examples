@@ -64,6 +64,10 @@ public class MoreFragment extends Fragment {
                         }
                         fragmentTransaction.commit();
                         break;
+                    case 1:
+                        Intent i = new Intent(moreFragmentLayout.getContext(), ManageMoneyActivity.class);
+                        startActivity(i);
+                        break;
                 }
             }
         });
@@ -77,8 +81,13 @@ public class MoreFragment extends Fragment {
 
     public void getData() {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("image", R.drawable.ic_user);
+        map.put("image", R.drawable.ic_userin);
         map.put("text", "用户信息");
+        gridViewData.add(map);
+
+        map = new HashMap<String, Object>();
+        map.put("image", R.drawable.ic_cny);
+        map.put("text", "理财利息");
         gridViewData.add(map);
     }
 }
