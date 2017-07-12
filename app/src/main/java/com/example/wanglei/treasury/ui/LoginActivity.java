@@ -92,21 +92,32 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     mPsw.setVisibility(View.VISIBLE);
                     Toast.makeText(context, "请输入内容", Toast.LENGTH_LONG).show();
                 } else {
-                    try {
-                        if(isLogin(username, password)) {
-                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                            i.putExtra("name", userEntity.getName());
-                            i.putExtra("username", userEntity.getUsername());
-                            inputAnimator(mInputLayout, mWidth, mHeight, i);
-                        }
-                        else {
-                            Intent i = null;
-                            inputAnimator(mInputLayout, mWidth, mHeight, i);
-                        }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
+//                    try {
+//                        if(isLogin(username, password)) {
+//                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+//                            i.putExtra("name", userEntity.getName());
+//                            i.putExtra("username", userEntity.getUsername());
+//                            inputAnimator(mInputLayout, mWidth, mHeight, i);
+//                        }
+//                        else {
+//                            Intent i = null;
+//                            inputAnimator(mInputLayout, mWidth, mHeight, i);
+//                        }
+//                    } catch (SQLException e) {
+//                        e.printStackTrace();
+//                    } catch (ClassNotFoundException e) {
+//                        e.printStackTrace();
+//                    }
+
+                    if(isLogin2(username, password)) {
+                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                        i.putExtra("name", userEntity.getName());
+                        i.putExtra("username", userEntity.getUsername());
+                        inputAnimator(mInputLayout, mWidth, mHeight, i);
+                    }
+                    else {
+                        Intent i = null;
+                        inputAnimator(mInputLayout, mWidth, mHeight, i);
                     }
                 }
                 break;
@@ -134,6 +145,15 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         return false;
     }
 
+    public boolean isLogin2(String user, String psw) {
+        if(user.equals("zheng123") && psw.equals("123456")) {
+            userEntity.setUsername("zheng123");
+            userEntity.setUserpassword("123456");
+            userEntity.setName("应秉正");
+            return true;
+        }
+        return false;
+    }
 
 
 
