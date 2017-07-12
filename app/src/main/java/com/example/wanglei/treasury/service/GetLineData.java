@@ -16,29 +16,6 @@ import java.util.Date;
  */
 
 public class GetLineData {
-    private ArrayList<ArrayList<String>> recordList = new ArrayList<ArrayList<String>>();
-
-    public int[] getMoneyInData(ArrayList<ArrayList<String>> recordList, int curMonth) {
-        int[] moneyIn = new int[5];
-        int beginMonth;
-        if (curMonth >= 5) {
-            beginMonth = curMonth - 4;
-        }
-        else {
-             beginMonth = curMonth + 12 - 4;
-        }
-
-        for (ArrayList<String> record: recordList) {
-
-            String curDateStr = record.get(2);
-            Date curDate = new Date(curDateStr);
-            int month = curDate.getMonth();
-            moneyIn[month-beginMonth] += Integer.parseInt(record.get(3));
-        }
-        return moneyIn;
-    }
-
-
     public int[] getLineData(int beginMonth) throws ClassNotFoundException, SQLException, SQLException {
         int[] moneyInAndOut = new int[10];
         MySQLProperties mp = new MySQLProperties();

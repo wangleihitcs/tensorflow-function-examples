@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.example.wanglei.treasury.R;
 import com.example.wanglei.treasury.entity.UserEntity;
+import com.example.wanglei.treasury.service.UserService;
+
+import java.sql.SQLException;
 
 /**
  * Created by wanglei on 2017/7/10.
@@ -56,7 +59,13 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                     userEntity.setUserpassword(editTextPassword.getText().toString());
                     userEntity.setName(editTextName.getText().toString());
 
-                    addUserEntity(userEntity);
+                    try {
+                        addUserEntity(userEntity);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
 
                     Toast.makeText(context, "注册成功", Toast.LENGTH_LONG).show();
 
@@ -69,7 +78,8 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     //注册新用户
-    public void addUserEntity(UserEntity userEntity) {
-
+    public void addUserEntity(UserEntity userEntity) throws SQLException, ClassNotFoundException {
+        UserService userService = new UserService();
+        userService.addUser(userEntity);
     }
 }

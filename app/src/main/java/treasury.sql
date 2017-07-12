@@ -22,5 +22,16 @@ CREATE TABLE `bill` (
 );
 
 
+--
+-- Table structure for table `user`
+--
 
+DROP TABLE IF EXISTS `user`;
+
+CREATE TABLE `user` (
+  `username` varchar(20) not NULL
+    primary key,
+  `password` varchar(40) DEFAULT NULL,
+  `name` char(20) DEFAULT NULL
+);
 

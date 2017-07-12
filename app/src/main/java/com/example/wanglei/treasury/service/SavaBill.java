@@ -38,9 +38,7 @@ public class SavaBill {
 		System.out.println(insert_sql);
 		Statement stmt=conn.createStatement();
 		stmt.executeUpdate(insert_sql);
-		//String sql = "select * from bill";
-		//ResultSet rs  = stmt.executeQuery(sql);
-		//rs.close();
+
 		stmt.close();
 		conn.close();
 	}

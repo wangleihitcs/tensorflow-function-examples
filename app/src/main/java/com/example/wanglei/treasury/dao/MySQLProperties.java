@@ -22,7 +22,8 @@ public class MySQLProperties {
 //		databasename = "treasory";
 //		username = "admin";
 //		password = "admin";
-		servername = "192.168.6.52";
+		//servername = "192.168.6.52";
+		servername = "192.168.20.214";
 		serverport = "3306";
 		databasename = "treasury";
 		username = "test";

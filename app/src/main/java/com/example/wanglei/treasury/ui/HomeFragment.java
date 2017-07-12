@@ -28,12 +28,9 @@ public class HomeFragment extends Fragment {
     private LineChartView lineChartView;
     private LineChartData lineChartData;
 
-<<<<<<< HEAD
     private GetLineData getLineData = new GetLineData();
-=======
     private String name = "刘龙航", username = "liullhitcs";
     private TextView textViewName, textViewUsername;//姓名和用户名
->>>>>>> 7657b2db31ff7b51bde437aa5322c80a8d28f19a
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,7 +38,13 @@ public class HomeFragment extends Fragment {
         homeFragmentLayout = inflater.inflate(R.layout.fragment_home, container, false);
 
         initViews();
-        setLinerChartData();
+        try {
+            setLinerChartData();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         lineChartView.setLineChartData(lineChartData);
 
@@ -69,9 +72,36 @@ public class HomeFragment extends Fragment {
      *
      */
     public void setLinerChartData() throws SQLException, ClassNotFoundException {
-        int[] moneyIn = new int[] {1000, 3000, 2000, 1500, 2000};
-        int[] moneyOut = new int[] {1200, 2000, 2000, 2500, 500};
-
+        Date curDate = new Date();
+        int curMonth = curDate.getMonth();
+        int beginMonth;
+        if (curMonth >= 5) {
+            beginMonth = curMonth - 4;
+        }
+        else {
+            beginMonth = curMonth + 12 - 4;
+        }
+        int[] moneyInAndOut = getLineData.getLineData(beginMonth);
+//        int[] moneyIn = new int[] {1000, 3000, 2000, 1500, 2000};
+//        int[] moneyOut = new int[] {1200, 2000, 2000, 2500, 500};
+        int[] moneyIn = new int[] {0, 0, 0, 0, 0};
+        int[] moneyOut = new int[] {0, 0, 0, 0, 0};
+        for (int i = 0; i < 10; i++)
+        {
+            if (i < 5)
+            {
+                moneyIn[i] = moneyInAndOut[i];
+            }
+            else
+            {
+                moneyOut[i-5] = moneyInAndOut[i];
+            }
+        }
+        String[] month = new String[5];
+        for (int i = 0; i < 5; i++) {
+            int tmpMonth = ((beginMonth + i) % 13) + 1;
+            month[i] = tmpMonth + "月";
+        }
         lineChartData = new LineChart().setLineChartData(homeFragmentLayout.getContext(), moneyIn, moneyOut, month);
     }
 }

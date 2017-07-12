@@ -22,8 +22,10 @@ import android.widget.Toast;
 
 import com.example.wanglei.treasury.R;
 import com.example.wanglei.treasury.entity.UserEntity;
+import com.example.wanglei.treasury.service.UserService;
 import com.example.wanglei.treasury.utils.JellyInterpolator;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -90,15 +92,21 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     mPsw.setVisibility(View.VISIBLE);
                     Toast.makeText(context, "请输入内容", Toast.LENGTH_LONG).show();
                 } else {
-                    if(isLogin(username, password)) {
-                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                        i.putExtra("name", userEntity.getName());
-                        i.putExtra("username", userEntity.getUsername());
-                        inputAnimator(mInputLayout, mWidth, mHeight, i);
-                    }
-                    else {
-                        Intent i = null;
-                        inputAnimator(mInputLayout, mWidth, mHeight, i);
+                    try {
+                        if(isLogin(username, password)) {
+                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                            i.putExtra("name", userEntity.getName());
+                            i.putExtra("username", userEntity.getUsername());
+                            inputAnimator(mInputLayout, mWidth, mHeight, i);
+                        }
+                        else {
+                            Intent i = null;
+                            inputAnimator(mInputLayout, mWidth, mHeight, i);
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
                     }
                 }
                 break;
@@ -114,11 +122,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    public boolean isLogin(String user, String psw) {
-        if(user.equals("zheng123") && psw.equals("123456")) {
-            userEntity.setUsername("zheng123");
-            userEntity.setUserpassword("123456");
-            userEntity.setName("应秉正");
+    public boolean isLogin(String user, String psw) throws SQLException, ClassNotFoundException {
+        UserService userService = new UserService();
+        UserEntity selectUser = userService.checkLogin(user, psw);
+        if(selectUser != null) {
+            userEntity.setUsername(user);
+            userEntity.setUserpassword(psw);
+            userEntity.setName(selectUser.getName());
             return true;
         }
         return false;
