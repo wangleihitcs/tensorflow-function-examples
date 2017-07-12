@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.wanglei.treasury.R;
 import com.example.wanglei.treasury.entity.BillEntity;
 import com.example.wanglei.treasury.service.SavaBill;
+import com.example.wanglei.treasury.utils.PublicData;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -58,7 +59,15 @@ public class IoFragment extends Fragment {
                 datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        textView.setText(year+"-"+(monthOfYear+1)+"-"+dayOfMonth);
+                        String month = "";
+                        String day = "";
+                        if (monthOfYear + 1 < 9){
+                            month = "0";
+                        }
+                        if (dayOfMonth < 10) {
+                            day = "0";
+                        }
+                        textView.setText(year+"-"+month+(monthOfYear+1)+"-"+day+dayOfMonth);
                         datePicker.setVisibility(View.GONE);
                     }
                 });
@@ -88,7 +97,7 @@ public class IoFragment extends Fragment {
                 }
                 billEntity.setBillId(System.currentTimeMillis()+"");
                 //获取用户名
-                billEntity.setUsername("zheng123");
+                billEntity.setUsername(PublicData.userEntity.getUsername());
                 if(!editTextMoney.getText().toString().equals("")  && !editTextExplain.getText().toString().equals("")) {
                     //获取金额
                     billEntity.setMoney(Integer.parseInt(editTextMoney.getText().toString()));
@@ -105,6 +114,7 @@ public class IoFragment extends Fragment {
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
+                    Toast.makeText(ioFragmentLayout.getContext(),"录入成功", Toast.LENGTH_LONG).show();
 
                 } else {
                     Toast.makeText(ioFragmentLayout.getContext(),"金额和备注不能为空！", Toast.LENGTH_LONG).show();

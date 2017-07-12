@@ -1,6 +1,7 @@
 package com.example.wanglei.treasury.service;
 
 import com.example.wanglei.treasury.dao.MySQLProperties;
+import com.example.wanglei.treasury.utils.PublicData;
 
 import java.net.Inet4Address;
 import java.sql.Connection;
@@ -8,6 +9,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -16,8 +19,8 @@ import java.util.Date;
  */
 
 public class GetLineData {
-    public int[] getLineData(int beginMonth) throws ClassNotFoundException, SQLException, SQLException {
-        int[] moneyInAndOut = new int[10];
+    public double[] getLineData(int beginMonth) throws ClassNotFoundException, SQLException, SQLException, ParseException {
+        double[] moneyInAndOut = new double[10];
         MySQLProperties mp = new MySQLProperties();
         Class.forName(mp.getDriver());  //加载数据库连接驱动
         //连接数据库
@@ -33,18 +36,20 @@ public class GetLineData {
         {
             begin = year + "-0" + beginMonth +"-01";
         }
-        String sql = "select * from bill where date > '" + begin + "'";
+        String sql = "select * from bill where date > '" + begin + "'"
+                + " and username = '" + PublicData.userEntity.getUsername() + "'";
         ResultSet rs = stmt.executeQuery(sql);
         //计算指定月份的
         while (rs.next()) {
             String curDateStr = rs.getString("date");
-            Date curDate = new Date(curDateStr);
+            SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd" );
+            Date curDate = sdf.parse(curDateStr);
             int month = curDate.getMonth();
             if (rs.getString("type").equals("1")){
-                moneyInAndOut[month-beginMonth] += Integer.parseInt(rs.getString("money"));
+                moneyInAndOut[month-beginMonth] += Double.parseDouble(rs.getString("money"));
             }
             else {
-                moneyInAndOut[month-beginMonth + 5] += Integer.parseInt(rs.getString("money"));
+                moneyInAndOut[month-beginMonth + 5] += Double.parseDouble(rs.getString("money"));
             }
         }
         rs.close();

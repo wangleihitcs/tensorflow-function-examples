@@ -24,6 +24,7 @@ import com.example.wanglei.treasury.R;
 import com.example.wanglei.treasury.entity.UserEntity;
 import com.example.wanglei.treasury.service.UserService;
 import com.example.wanglei.treasury.utils.JellyInterpolator;
+import com.example.wanglei.treasury.utils.PublicData;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -46,10 +47,14 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private EditText editText_username, editText_password; //用户名、密码
     private UserEntity userEntity = new UserEntity();
 
+    private UserEntity selectUser = null;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         context = this;
         initViews();
@@ -109,15 +114,23 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 //                        e.printStackTrace();
 //                    }
 
-                    if(isLogin2(username, password)) {
-                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                        i.putExtra("name", userEntity.getName());
-                        i.putExtra("username", userEntity.getUsername());
-                        inputAnimator(mInputLayout, mWidth, mHeight, i);
-                    }
-                    else {
-                        Intent i = null;
-                        inputAnimator(mInputLayout, mWidth, mHeight, i);
+                    try {
+                        if(isLogin(username, password)) {
+                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                            i.putExtra("name", userEntity.getName());
+                            i.putExtra("username", userEntity.getUsername());
+                            inputAnimator(mInputLayout, mWidth, mHeight, i);
+                        }
+                        else {
+                            Intent i = null;
+                            inputAnimator(mInputLayout, mWidth, mHeight, i);
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
                 break;
@@ -133,14 +146,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    public boolean isLogin(String user, String psw) throws SQLException, ClassNotFoundException {
-        final UserEntity[] selectUser = {null};
+    public boolean isLogin(String user, String psw) throws SQLException, ClassNotFoundException, InterruptedException {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 UserService userService = new UserService();
                 try {
-                    selectUser[0] = userService.checkLogin(user, psw);
+                    selectUser = userService.checkLogin(user, psw);
 
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
@@ -149,10 +161,12 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 }
             }
         }).start();
-        if(selectUser[0] != null) {
+        Thread.currentThread().sleep(800);
+        if(selectUser != null) {
             userEntity.setUsername(user);
             userEntity.setUserpassword(psw);
-            userEntity.setName(selectUser[0].getName());
+            userEntity.setName(selectUser.getName());
+            PublicData.userEntity = userEntity;
             return true;
         }
         return false;
@@ -264,7 +278,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     startActivity(i);
                 } else {
                     Toast.makeText(context, "用户名或密码错误", Toast.LENGTH_LONG).show();
-                }
+//                    onCreate(null);
+                    refresh();
+            }
             }
 
             @Override
@@ -278,6 +294,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             }
         });
 
+    }
+
+    /**
+     * 刷新, 这种刷新方法，只有一个Activity实例。
+     */
+    public void refresh() {
+        onCreate(null);
     }
 
 }

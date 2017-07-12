@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import com.example.wanglei.treasury.R;
 import com.example.wanglei.treasury.entity.UserEntity;
+import com.example.wanglei.treasury.service.UserService;
+import com.example.wanglei.treasury.utils.PublicData;
+
+import java.sql.SQLException;
 
 /**
  * Created by wanglei on 2017/7/10.
@@ -26,6 +30,8 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
     private Button buttonCommit;
 
     private UserEntity userEntity = new UserEntity();
+
+    private UserService userService = new UserService();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,9 +49,10 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
         editTextName = (EditText) userFragmentLayout.findViewById(R.id.regist_name);
         buttonCommit = (Button) userFragmentLayout.findViewById(R.id.regist_commit);
 
-        editTextUsername.setText("zheng123");
-        editTextPassword.setText("123456");
-        editTextName.setText("应秉正");
+        editTextUsername.setText(PublicData.userEntity.getUsername());
+        editTextUsername.setFocusable(false);
+        editTextPassword.setText(PublicData.userEntity.getUserpassword());
+        editTextName.setText(PublicData.userEntity.getName());
 
         buttonCommit.setText("修改提交");
 
@@ -73,6 +80,17 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
     }
 
     public void updateUserEntity(UserEntity userEntity) {
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    userService.update(userEntity);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

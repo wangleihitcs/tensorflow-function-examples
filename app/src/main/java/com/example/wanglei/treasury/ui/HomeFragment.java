@@ -6,14 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wanglei.treasury.R;
 import com.example.wanglei.treasury.service.GetLineData;
+import com.example.wanglei.treasury.service.TotalBillService;
 import com.example.wanglei.treasury.statistics.LineChart;
 import com.example.wanglei.treasury.statistics.PieChart;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PieChartData;
@@ -38,6 +42,11 @@ public class HomeFragment extends Fragment {
     private String name = "刘龙航", username = "liullhitcs";
     private TextView textViewName, textViewUsername;//姓名和用户名
 
+    private TotalBillService totalBillService = new TotalBillService();
+    private HashMap<String, Double> totalMoney = new HashMap<String, Double>();
+
+    private double[] moneyInAndOut = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private double[] moneyTotal = {0, 0};
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,11 +59,18 @@ public class HomeFragment extends Fragment {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
-        setPieChartData();
+        try {
+            setPieChartData();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(homeFragmentLayout.getContext(), String.valueOf(moneyTotal[0]), Toast.LENGTH_LONG).show();
 
-        textViewYuE.setText("12000.00");
+        textViewYuE.setText(String.valueOf(moneyTotal[0]-moneyTotal[1]));
         lineChartView.setLineChartData(lineChartData);
         pieChartView.setPieChartData(pieChartData);
 
@@ -84,7 +100,7 @@ public class HomeFragment extends Fragment {
      * 最近五个月的折线图数据
      *
      */
-    public void setLinerChartData() throws SQLException, ClassNotFoundException {
+    public void setLinerChartData() throws SQLException, ClassNotFoundException, InterruptedException {
         Date curDate = new Date();
         int curMonth = curDate.getMonth();
         int beginMonth;
@@ -94,11 +110,25 @@ public class HomeFragment extends Fragment {
         else {
             beginMonth = curMonth + 12 - 4;
         }
-        int[] moneyInAndOut = getLineData.getLineData(beginMonth);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    moneyInAndOut = getLineData.getLineData(beginMonth);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        Thread.currentThread().sleep(1000);
 //        int[] moneyIn = new int[] {1000, 3000, 2000, 1500, 2000};
 //        int[] moneyOut = new int[] {1200, 2000, 2000, 2500, 500};
-        int[] moneyIn = new int[] {0, 0, 0, 0, 0};
-        int[] moneyOut = new int[] {0, 0, 0, 0, 0};
+        double[] moneyIn = new double[] {0, 0, 0, 0, 0};
+        double[] moneyOut = new double[] {0, 0, 0, 0, 0};
         for (int i = 0; i < 10; i++)
         {
             if (i < 5)
@@ -121,7 +151,23 @@ public class HomeFragment extends Fragment {
     /**
      * 饼状图数据
      */
-    public void setPieChartData() {
-        pieChartData = new PieChart().setPieChart(homeFragmentLayout.getContext(), 1000, 800);
+    public void setPieChartData() throws InterruptedException {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    moneyTotal = totalBillService.query();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        Thread.currentThread().sleep(1000);
+
+        pieChartData = new PieChart().setPieChart(homeFragmentLayout.getContext(), moneyTotal[0],
+                moneyTotal[1]);
     }
 }

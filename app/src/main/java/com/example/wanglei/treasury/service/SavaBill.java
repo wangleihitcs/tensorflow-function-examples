@@ -22,9 +22,7 @@ public class SavaBill {
 	public void saveBill(BillEntity bill) throws ClassNotFoundException, SQLException {
 
 		String billId = bill.getBillId(); //账单编号
-		SimpleDateFormat formatter;
-		formatter = new SimpleDateFormat ("yyyy-MM-dd");
-		String date = formatter.format(bill.getDate()); //日期
+		String date = bill.getDate(); //日期
 		int type = bill.getType(); //类型，1收入,0支出
 		double money = bill.getMoney(); //金额
 		String expalin = bill.getExpalin(); //说明

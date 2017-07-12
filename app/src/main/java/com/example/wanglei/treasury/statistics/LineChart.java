@@ -21,13 +21,13 @@ import lecho.lib.hellocharts.model.ValueShape;
 public class LineChart {
     private LineChartData lineChartData;
 
-    public LineChartData setLineChartData(Context context, int[] moneyIn, int[] moneyOut, String[] month) {
+    public LineChartData setLineChartData(Context context, double[] moneyIn, double[] moneyOut, String[] month) {
         List<Line> lines = new ArrayList<Line>();//存储线条
         List<PointValue> pointValues = new ArrayList<PointValue>();
 
         //收入折线的数据
         for(int i = 0; i < moneyIn.length; i++) {
-            pointValues.add(new PointValue(i,moneyIn[i]));
+            pointValues.add(new PointValue(i, (float) moneyIn[i]));
         }
         Line line = new Line(pointValues);
         line.setColor(context.getResources().getColor(R.color.colorWhite));//线条颜色白色
@@ -38,7 +38,7 @@ public class LineChart {
         //支出折线的数据
         pointValues = new ArrayList<PointValue>();
         for(int i = 0; i < moneyOut.length; i++) {
-            pointValues.add(new PointValue(i,moneyOut[i]));
+            pointValues.add(new PointValue(i, (float) moneyOut[i]));
         }
         line = new Line(pointValues);
         line.setColor(context.getResources().getColor(R.color.colorAccent));//线条颜色红色

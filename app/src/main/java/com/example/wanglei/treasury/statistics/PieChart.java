@@ -17,15 +17,15 @@ import lecho.lib.hellocharts.model.SliceValue;
 public class PieChart {
     private PieChartData pieChartData;
 
-    public PieChartData setPieChart(Context context, int in, int out) {
+    public PieChartData setPieChart(Context context, double in, double out) {
 
         List<SliceValue> data = new ArrayList<SliceValue>();
-        SliceValue sliceValueIn = new SliceValue(in);
+        SliceValue sliceValueIn = new SliceValue((float) in);
         sliceValueIn.setLabel("收入");
         sliceValueIn.setColor(context.getResources().getColor(R.color.colorPrimary));
         data.add(sliceValueIn);
 
-        SliceValue sliceValueOut = new SliceValue(out);
+        SliceValue sliceValueOut = new SliceValue((float) out);
         sliceValueOut.setLabel("支出");
         sliceValueOut.setColor(context.getResources().getColor(R.color.colorAccent));
         data.add(sliceValueOut);

@@ -62,17 +62,21 @@ public class BillFragment extends Fragment {
         billFragmentLayout = inflater.inflate(R.layout.fragment_bill, container, false);
 
         initViews();
-        getListBillEntityByDate("2017-07-01", "2017-07-30");
-        getData();
+
+
 
         //listView设置适配器
         simpleAdapter = new SimpleAdapter(billFragmentLayout.getContext(), listViewData, R.layout.listview_bill_item, key, listViewId);
         listView.setAdapter(simpleAdapter);
 
         Calendar calendar = Calendar.getInstance();
-        textView_begin.setText(calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH));
-        textView_end.setText(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-"+calendar.get(Calendar.DAY_OF_MONTH));
+        String curDate = calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-"+calendar.get(Calendar.DAY_OF_MONTH);
+        String lastDate = calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH))+"-"+calendar.get(Calendar.DAY_OF_MONTH);
+        textView_begin.setText(lastDate);
+        textView_end.setText(curDate);
         //点击日期控件出现
+        getListBillEntityByDate(lastDate, curDate);
+        getData();
         textView_begin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,8 +160,12 @@ public class BillFragment extends Fragment {
                 //获取类型
                 radioButton = (RadioButton) billFragmentLayout.findViewById(radioGroup.getCheckedRadioButtonId());
                 String billType = radioButton.getText().toString();
-
-                getListBillEntityByDateAndType(billDateBeigin, billDateEnd, billType);
+                if (billType.equals("收入")) {
+                    getListBillEntityByDateAndType(billDateBeigin, billDateEnd, "1");
+                }
+                else {
+                    getListBillEntityByDateAndType(billDateBeigin, billDateEnd, "0");
+                }
                 getData();
                 //listView设置适配器
                 simpleAdapter = new SimpleAdapter(billFragmentLayout.getContext(), listViewData, R.layout.listview_bill_item, key, listViewId);

@@ -41,7 +41,7 @@ public class UserService {
         Connection conn = DriverManager.getConnection(mp.getUrl(), mp.getUsername(), mp.getPassword());
         Statement stmt = conn.createStatement();
 
-        String sql = "select password, name from user where username = '" + username;
+        String sql = "select password, name from user where username = '" + username + "'";
         ResultSet rs = stmt.executeQuery(sql);
         //计算指定月份的
         while (rs.next()) {
@@ -56,5 +56,20 @@ public class UserService {
         stmt.close();
         conn.close();
         return user;
+    }
+
+    public void update(UserEntity user) throws ClassNotFoundException, SQLException {
+
+        MySQLProperties mp = new MySQLProperties();
+        Class.forName(mp.getDriver());  //加载数据库连接驱动
+        //连接数据库
+        Connection conn = DriverManager.getConnection(mp.getUrl(), mp.getUsername(), mp.getPassword());
+        Statement stmt = conn.createStatement();
+        String update_sql = "update user set password = '" + user.getUserpassword() +
+                "', name = '" + user.getName() +
+                "' where username = '" + user.getUsername() + "'";
+        stmt.executeUpdate(update_sql);
+        stmt.close();
+        conn.close();
     }
 }

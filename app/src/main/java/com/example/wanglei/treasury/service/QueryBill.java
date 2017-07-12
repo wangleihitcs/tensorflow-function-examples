@@ -1,6 +1,7 @@
 package com.example.wanglei.treasury.service;
 
 import com.example.wanglei.treasury.dao.MySQLProperties;
+import com.example.wanglei.treasury.utils.PublicData;
 
 import java.sql.Array;
 import java.sql.Connection;
@@ -24,8 +25,9 @@ public class QueryBill {
         Connection conn = DriverManager.getConnection(mp.getUrl(), mp.getUsername(), mp.getPassword());
         Statement stmt = conn.createStatement();
 
-        String sql = "select * from bill where date < '" + end + "' and "
-                + "date > '" + begin + "' and type = " + type;
+        String sql = "select * from bill where date <= '" + end + "' and "
+                + "date >= '" + begin + "' and type = " + type
+                + " and username = '" + PublicData.userEntity.getUsername() + "'";
         ResultSet rs = stmt.executeQuery(sql);
         //计算指定月份的
         while (rs.next()) {
@@ -51,7 +53,8 @@ public class QueryBill {
         Connection conn = DriverManager.getConnection(mp.getUrl(), mp.getUsername(), mp.getPassword());
         Statement stmt = conn.createStatement();
 
-        String sql = "select * from bill where type = " + type;
+        String sql = "select * from bill where type = " + type
+                + " and username = '" + PublicData.userEntity.getUsername() + "'";
         ResultSet rs = stmt.executeQuery(sql);
         //计算指定月份的
         while (rs.next()) {
@@ -82,8 +85,9 @@ public class QueryBill {
         Connection conn = DriverManager.getConnection(mp.getUrl(), mp.getUsername(), mp.getPassword());
         Statement stmt = conn.createStatement();
 
-        String sql = "select * from bill where date < '" + end + "' and "
-                + "date > '" + begin + "'";
+        String sql = "select * from bill where date <= '" + end + "' and "
+                + "date >= '" + begin + "'"
+                + " and username = '" + PublicData.userEntity.getUsername() + "'";
         ResultSet rs = stmt.executeQuery(sql);
         //计算指定月份的
         while (rs.next()) {
