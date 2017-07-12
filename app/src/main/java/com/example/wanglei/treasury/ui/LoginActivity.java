@@ -123,12 +123,25 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     public boolean isLogin(String user, String psw) throws SQLException, ClassNotFoundException {
-        UserService userService = new UserService();
-        UserEntity selectUser = userService.checkLogin(user, psw);
-        if(selectUser != null) {
+        final UserEntity[] selectUser = {null};
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UserService userService = new UserService();
+                try {
+                    selectUser[0] = userService.checkLogin(user, psw);
+
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        if(selectUser[0] != null) {
             userEntity.setUsername(user);
             userEntity.setUserpassword(psw);
-            userEntity.setName(selectUser.getName());
+            userEntity.setName(selectUser[0].getName());
             return true;
         }
         return false;
