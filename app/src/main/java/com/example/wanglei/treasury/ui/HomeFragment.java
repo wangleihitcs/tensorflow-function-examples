@@ -7,7 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wanglei.treasury.R;
+import com.example.wanglei.treasury.service.GetLineData;
 import com.example.wanglei.treasury.statistics.LineChart;
+
+import java.sql.SQLException;
+import java.util.Date;
 
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.view.LineChartView;
@@ -22,6 +26,8 @@ public class HomeFragment extends Fragment {
 
     private LineChartView lineChartView;
     private LineChartData lineChartData;
+
+    private GetLineData getLineData = new GetLineData();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,11 +53,37 @@ public class HomeFragment extends Fragment {
      * 最近五个月的折线图数据
      *
      */
-    public void setLinerChartData() {
-        int[] moneyIn = new int[] {1000, 3000, 2000, 1500, 2000};
-        int[] moneyOut = new int[] {1200, 2000, 2000, 2500, 500};
-        String[] month = new String[] {"3月","4月","5月","6月","7月"};
-
+    public void setLinerChartData() throws SQLException, ClassNotFoundException {
+        Date curDate = new Date("2017-01-01");
+        int curMonth = curDate.getMonth();
+        int beginMonth;
+        if (curMonth >= 5) {
+            beginMonth = curMonth - 4;
+        }
+        else {
+            beginMonth = curMonth + 12 - 4;
+        }
+        int[] moneyInAndOut = getLineData.getLineData(beginMonth);
+//        int[] moneyIn = new int[] {1000, 3000, 2000, 1500, 2000};
+//        int[] moneyOut = new int[] {1200, 2000, 2000, 2500, 500};
+        int[] moneyIn = new int[] {0, 0, 0, 0, 0};
+        int[] moneyOut = new int[] {0, 0, 0, 0, 0};
+        for (int i = 0; i < 10; i++)
+        {
+            if (i < 5)
+            {
+                moneyIn[i] = moneyInAndOut[i];
+            }
+            else
+            {
+                moneyOut[i-5] = moneyInAndOut[i];
+            }
+        }
+        String[] month = new String[5];
+        for (int i = 0; i < 5; i++) {
+            int tmpMonth = ((beginMonth + i) % 13) + 1;
+            month[i] = tmpMonth + "月";
+        }
         lineChartData = new LineChart().setLineChartData(homeFragmentLayout.getContext(), moneyIn, moneyOut, month);
     }
 }
