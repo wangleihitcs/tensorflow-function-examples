@@ -28,9 +28,10 @@ import lecho.lib.hellocharts.view.PieChartView;
 public class HomeFragment extends Fragment {
     private View homeFragmentLayout;
 
-    private LineChartView lineChartView;
+    private TextView textViewYuE; //余额
+    private LineChartView lineChartView;//折线图
     private LineChartData lineChartData;
-    private PieChartView pieChartView;
+    private PieChartView pieChartView;//饼图
     private PieChartData pieChartData;
 
     private GetLineData getLineData = new GetLineData();
@@ -53,6 +54,7 @@ public class HomeFragment extends Fragment {
 
         setPieChartData();
 
+        textViewYuE.setText("12000.00");
         lineChartView.setLineChartData(lineChartData);
         pieChartView.setPieChartData(pieChartData);
 
@@ -67,9 +69,11 @@ public class HomeFragment extends Fragment {
         pieChartView = (PieChartView) homeFragmentLayout.findViewById(R.id.pieChart);
         textViewName = (TextView) homeFragmentLayout.findViewById(R.id.textView_name);
         textViewUsername = (TextView) homeFragmentLayout.findViewById(R.id.textView_username);
+        textViewYuE = (TextView) homeFragmentLayout.findViewById(R.id.textView_yue);
 
         textViewName.setText(name);
         textViewUsername.setText(username);
+
     }
 
     public void setNameAndUsername(String name, String username) {
