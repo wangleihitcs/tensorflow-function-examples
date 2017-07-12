@@ -63,6 +63,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- 余额 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="余额（元）"
+                android:textColor="@color/colorWhite"
+                android:gravity="left"
+                android:background="@color/royalblue"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="34100.23"
+                android:textSize="30dp"
+                android:textColor="@color/colorWhite"
+                android:gravity="left"
+                android:background="@color/royalblue"/>
             <!-- 折线图 -->
             <lecho.lib.hellocharts.view.LineChartView
                 android:id="@+id/lineChart"
