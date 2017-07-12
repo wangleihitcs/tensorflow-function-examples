@@ -19,6 +19,7 @@ import com.example.wanglei.treasury.service.SavaBill;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by wanglei on 2017/7/6.
@@ -47,15 +48,17 @@ public class IoFragment extends Fragment {
 
         initViews();
 
+        Calendar calendar = Calendar.getInstance();
+        textView.setText(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-"+calendar.get(Calendar.DAY_OF_MONTH));
         //点击日期控件出现
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 datePicker.setVisibility(View.VISIBLE);
-                datePicker.init(2017, 7, 7, new DatePicker.OnDateChangedListener() {
+                datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        textView.setText(year+"-"+monthOfYear+"-"+dayOfMonth);
+                        textView.setText(year+"-"+(monthOfYear+1)+"-"+dayOfMonth);
                         datePicker.setVisibility(View.GONE);
                     }
                 });
@@ -70,7 +73,7 @@ public class IoFragment extends Fragment {
                  * 第一步,得到账单信息
                  */
                 //获取时间
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     billEntity.setDate(textView.getText().toString());
                 } catch (Exception e) {
@@ -84,25 +87,30 @@ public class IoFragment extends Fragment {
                     billEntity.setType(0);
                 }
                 billEntity.setBillId(System.currentTimeMillis()+"");
-                //获取金额
-                billEntity.setMoney(Integer.parseInt(editTextMoney.getText().toString()));
-                //获取说明
-                billEntity.setExpalin(editTextExplain.getText().toString());
                 //获取用户名
                 billEntity.setUsername("zheng123");
+                if(!editTextMoney.getText().toString().equals("")  && !editTextExplain.getText().toString().equals("")) {
+                    //获取金额
+                    billEntity.setMoney(Integer.parseInt(editTextMoney.getText().toString()));
+                    //获取说明
+                    billEntity.setExpalin(editTextExplain.getText().toString());
 
-                Toast.makeText(ioFragmentLayout.getContext(),billEntity.toString(), Toast.LENGTH_LONG).show();
+                    /**
+                     * 第二步,将账单增加到数据库
+                     */
+                    try {
+                        addBillEntityToBase();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
 
-                /**
-                 * 第二步,将账单增加到数据库
-                 */
-                try {
-                    addBillEntityToBase();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+                } else {
+                    Toast.makeText(ioFragmentLayout.getContext(),"金额和备注不能为空！", Toast.LENGTH_LONG).show();
                 }
+
+
             }
         });
 

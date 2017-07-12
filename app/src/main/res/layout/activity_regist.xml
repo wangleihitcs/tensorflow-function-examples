@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include_main_title"
+        layout="@layout/main_title"></include>
+
+    <!-- 第一部分，用户名 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="53dp"
+            android:layout_height="match_parent"
+            android:text="用户名"
+            android:layout_margin="20dp"
+            android:textSize="17dp"/>
+        <EditText
+            android:id="@+id/regist_username"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:hint="20位数字、字母、下划线"
+            android:layout_margin="20dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <!-- 第二部分，密码 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="53dp"
+            android:layout_height="match_parent"
+            android:text="密码"
+            android:layout_margin="20dp"
+            android:textSize="17dp"/>
+        <EditText
+            android:id="@+id/regist_password"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:hint="20位数字、字母、下划线"
+            android:layout_margin="20dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <!-- 第三部分，姓名 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="53dp"
+            android:layout_height="match_parent"
+            android:text="姓名"
+            android:layout_margin="20dp"
+            android:textSize="17dp"/>
+        <EditText
+            android:id="@+id/regist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/regist_commit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提交"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

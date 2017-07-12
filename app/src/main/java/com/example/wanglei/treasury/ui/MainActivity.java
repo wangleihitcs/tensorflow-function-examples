@@ -12,11 +12,12 @@ import com.example.wanglei.treasury.R;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private FragmentManager fragmentManager;//Fragment管理器
 
-    //四个fragment
+    //四+1个fragment
     private HomeFragment homeFragment;
     private IoFragment ioFragment;
     private BillFragment billFragment;
     private MoreFragment moreFragment;
+    private UserInformationFragment userInformationFragment;
 
     //对应底部四个菜单栏区域，图标+TextView,用于菜单的选中变色，没太大用处
     private View homeLayout, ioLayout, billLayout, foundLayout;
@@ -99,13 +100,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(moreFragment != null) {
             fragmentTransaction.hide(moreFragment);
         }
+        if(userInformationFragment != null) {
+            fragmentTransaction.hide(userInformationFragment);
+        }
 
         //第三步，设置选中的底部菜单
         switch (index) {
             case 0://点击了"主页"
+                String name = getIntent().getStringExtra("name");
+                String username = getIntent().getStringExtra("username");
                 textView_menu_home.setTextColor(getResources().getColor(R.color.colorTabSelect));
                 if(homeFragment == null) {
                     homeFragment = new HomeFragment();
+                    homeFragment.setNameAndUsername(name, username);
                     fragmentTransaction.add(R.id.content, homeFragment);
                 } else {
                     fragmentTransaction.show(homeFragment);
