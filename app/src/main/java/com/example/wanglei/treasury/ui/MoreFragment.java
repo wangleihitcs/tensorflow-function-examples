@@ -79,6 +79,9 @@ public class MoreFragment extends Fragment {
         gridView = (GridView) moreFragmentLayout.findViewById(R.id.more_gridview);
     }
 
+    /**
+     * 获取网格view
+     */
     public void getData() {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("image", R.drawable.ic_userin);
