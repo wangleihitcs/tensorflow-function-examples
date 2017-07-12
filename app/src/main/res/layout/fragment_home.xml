@@ -63,8 +63,40 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- 余额 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:text="余额（元）"
+                android:textColor="@color/colorWhite"
+                android:gravity="left"
+                android:background="@color/royalblue"/>
+            <TextView
+                android:id="@+id/textView_yue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="34100.23"
+                android:textSize="40dp"
+                android:textColor="@color/colorWhite"
+                android:gravity="left"
+                android:background="@color/royalblue"/>
+            <!-- 折线图 -->
             <lecho.lib.hellocharts.view.LineChartView
                 android:id="@+id/lineChart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_margin="10dp"
+                android:background="@color/colorTabSelect"/>
+
+            <!-- 饼状图 -->
+            <lecho.lib.hellocharts.view.PieChartView
+                android:id="@+id/pieChart"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_margin="10dp"

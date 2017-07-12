@@ -10,12 +10,15 @@ import android.widget.TextView;
 import com.example.wanglei.treasury.R;
 import com.example.wanglei.treasury.service.GetLineData;
 import com.example.wanglei.treasury.statistics.LineChart;
+import com.example.wanglei.treasury.statistics.PieChart;
 
 import java.sql.SQLException;
 import java.util.Date;
 
 import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.view.LineChartView;
+import lecho.lib.hellocharts.view.PieChartView;
 
 /**
  * Created by wanglei on 2017/7/6.
@@ -25,8 +28,11 @@ import lecho.lib.hellocharts.view.LineChartView;
 public class HomeFragment extends Fragment {
     private View homeFragmentLayout;
 
-    private LineChartView lineChartView;
+    private TextView textViewYuE; //余额
+    private LineChartView lineChartView;//折线图
     private LineChartData lineChartData;
+    private PieChartView pieChartView;//饼图
+    private PieChartData pieChartData;
 
     private GetLineData getLineData = new GetLineData();
     private String name = "刘龙航", username = "liullhitcs";
@@ -46,7 +52,11 @@ public class HomeFragment extends Fragment {
             e.printStackTrace();
         }
 
+        setPieChartData();
+
+        textViewYuE.setText("12000.00");
         lineChartView.setLineChartData(lineChartData);
+        pieChartView.setPieChartData(pieChartData);
 
         return homeFragmentLayout;
     }
@@ -56,11 +66,14 @@ public class HomeFragment extends Fragment {
      */
     public void initViews() {
         lineChartView = (LineChartView) homeFragmentLayout.findViewById(R.id.lineChart);
+        pieChartView = (PieChartView) homeFragmentLayout.findViewById(R.id.pieChart);
         textViewName = (TextView) homeFragmentLayout.findViewById(R.id.textView_name);
         textViewUsername = (TextView) homeFragmentLayout.findViewById(R.id.textView_username);
+        textViewYuE = (TextView) homeFragmentLayout.findViewById(R.id.textView_yue);
 
         textViewName.setText(name);
         textViewUsername.setText(username);
+
     }
 
     public void setNameAndUsername(String name, String username) {
@@ -103,5 +116,12 @@ public class HomeFragment extends Fragment {
             month[i] = tmpMonth + "月";
         }
         lineChartData = new LineChart().setLineChartData(homeFragmentLayout.getContext(), moneyIn, moneyOut, month);
+    }
+
+    /**
+     * 饼状图数据
+     */
+    public void setPieChartData() {
+        pieChartData = new PieChart().setPieChart(homeFragmentLayout.getContext(), 1000, 800);
     }
 }
