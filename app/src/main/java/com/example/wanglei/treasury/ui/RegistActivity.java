@@ -79,7 +79,19 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
 
     //注册新用户
     public void addUserEntity(UserEntity userEntity) throws SQLException, ClassNotFoundException {
-        UserService userService = new UserService();
-        userService.addUser(userEntity);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UserService userService = new UserService();
+                try {
+                    userService.addUser(userEntity);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
     }
 }
