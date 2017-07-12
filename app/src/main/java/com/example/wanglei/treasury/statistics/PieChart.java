@@ -20,17 +20,18 @@ public class PieChart {
     public PieChartData setPieChart(Context context, int in, int out) {
 
         List<SliceValue> data = new ArrayList<SliceValue>();
-        SliceValue sliceValueIn = new SliceValue();
+        SliceValue sliceValueIn = new SliceValue(in);
         sliceValueIn.setLabel("收入");
         sliceValueIn.setColor(context.getResources().getColor(R.color.colorPrimary));
         data.add(sliceValueIn);
 
-        SliceValue sliceValueOut = new SliceValue();
-        sliceValueIn.setLabel("支出");
-        sliceValueIn.setColor(context.getResources().getColor(R.color.colorAccent));
-        data.add(sliceValueIn);
+        SliceValue sliceValueOut = new SliceValue(out);
+        sliceValueOut.setLabel("支出");
+        sliceValueOut.setColor(context.getResources().getColor(R.color.colorAccent));
+        data.add(sliceValueOut);
 
         pieChartData = new PieChartData(data);
+        pieChartData.setHasLabels(true);
         pieChartData.setHasLabelsOutside(true);
 
         return pieChartData;
