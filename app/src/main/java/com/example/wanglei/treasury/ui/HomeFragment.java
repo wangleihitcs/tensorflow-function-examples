@@ -68,7 +68,6 @@ public class HomeFragment extends Fragment {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Toast.makeText(homeFragmentLayout.getContext(), String.valueOf(moneyTotal[0]), Toast.LENGTH_LONG).show();
 
         textViewYuE.setText(String.valueOf(moneyTotal[0]-moneyTotal[1]));
         lineChartView.setLineChartData(lineChartData);
@@ -124,7 +123,7 @@ public class HomeFragment extends Fragment {
                 }
             }
         }).start();
-        Thread.currentThread().sleep(1000);
+        Thread.currentThread().sleep(500);
 //        int[] moneyIn = new int[] {1000, 3000, 2000, 1500, 2000};
 //        int[] moneyOut = new int[] {1200, 2000, 2000, 2500, 500};
         double[] moneyIn = new double[] {0, 0, 0, 0, 0};
@@ -140,6 +139,8 @@ public class HomeFragment extends Fragment {
                 moneyOut[i-5] = moneyInAndOut[i];
             }
         }
+//        Toast.makeText(homeFragmentLayout.getContext(), String.valueOf(moneyIn[2]), Toast.LENGTH_LONG).show();
+
         String[] month = new String[5];
         for (int i = 0; i < 5; i++) {
             int tmpMonth = ((beginMonth + i) % 13) + 1;
@@ -165,7 +166,7 @@ public class HomeFragment extends Fragment {
                 }
             }
         }).start();
-        Thread.currentThread().sleep(1000);
+        Thread.currentThread().sleep(500);
 
         pieChartData = new PieChart().setPieChart(homeFragmentLayout.getContext(), moneyTotal[0],
                 moneyTotal[1]);

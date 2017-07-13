@@ -110,12 +110,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String name = getIntent().getStringExtra("name");
                 String username = getIntent().getStringExtra("username");
                 textView_menu_home.setTextColor(getResources().getColor(R.color.colorTabSelect));
+                if (homeFragment != null) {
+                    //
+                }
+
                 if(homeFragment == null) {
                     homeFragment = new HomeFragment();
                     homeFragment.setNameAndUsername(name, username);
                     fragmentTransaction.add(R.id.content, homeFragment);
                 } else {
-                    fragmentTransaction.show(homeFragment);
+                    homeFragment = new HomeFragment();
+                    homeFragment.setNameAndUsername(name, username);
+                    fragmentTransaction.add(R.id.content, homeFragment);
+                    //homeFragment.initViews();
+                    //fragmentTransaction.show(homeFragment);
                 }
                 break;
             case 1://点击了"收支"

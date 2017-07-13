@@ -7,6 +7,8 @@ import com.example.wanglei.treasury.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import lecho.lib.hellocharts.formatter.LineChartValueFormatter;
+import lecho.lib.hellocharts.formatter.SimpleLineChartValueFormatter;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
@@ -33,17 +35,23 @@ public class LineChart {
         line.setColor(context.getResources().getColor(R.color.colorWhite));//线条颜色白色
         line.setShape(ValueShape.CIRCLE);//点为圆形
         line.setHasLabels(true);
+        //显示一位小数
+        LineChartValueFormatter chartValueFormatter = new SimpleLineChartValueFormatter(1);
+        line.setFormatter(chartValueFormatter);
         lines.add(line);
 
         //支出折线的数据
         pointValues = new ArrayList<PointValue>();
         for(int i = 0; i < moneyOut.length; i++) {
             pointValues.add(new PointValue(i, (float) moneyOut[i]));
+
         }
+
         line = new Line(pointValues);
         line.setColor(context.getResources().getColor(R.color.colorAccent));//线条颜色红色
         line.setShape(ValueShape.SQUARE);//点为圆形
         line.setHasLabels(true);
+        line.setFormatter(chartValueFormatter);
         lines.add(line);
 
         lineChartData = new LineChartData(lines);

@@ -47,6 +47,7 @@ public class GetLineData {
             int month = curDate.getMonth();
             if (rs.getString("type").equals("1")){
                 moneyInAndOut[month-beginMonth] += Double.parseDouble(rs.getString("money"));
+
             }
             else {
                 moneyInAndOut[month-beginMonth + 5] += Double.parseDouble(rs.getString("money"));
@@ -55,7 +56,10 @@ public class GetLineData {
         rs.close();
         stmt.close();
         conn.close();
-
+//        for (double i : moneyInAndOut) {
+//            System.out.println(i);
+//        }
+        System.out.println();
         return moneyInAndOut;
     }
 }
