@@ -21,6 +21,8 @@ import com.example.wanglei.treasury.utils.PublicData;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by wanglei on 2017/7/6.
@@ -98,9 +100,12 @@ public class IoFragment extends Fragment {
                 billEntity.setBillId(System.currentTimeMillis()+"");
                 //获取用户名
                 billEntity.setUsername(PublicData.userEntity.getUsername());
-                if(!editTextMoney.getText().toString().equals("")  && !editTextExplain.getText().toString().equals("")) {
+                if(!editTextMoney.getText().toString().equals("")
+                        && isDouble(editTextMoney.getText().toString())
+                        && !editTextExplain.getText().toString().equals("")) {
                     //获取金额
-                    billEntity.setMoney(Integer.parseInt(editTextMoney.getText().toString()));
+                    double textMoney = Double.parseDouble(editTextMoney.getText().toString());
+                    billEntity.setMoney(textMoney);
                     //获取说明
                     billEntity.setExpalin(editTextExplain.getText().toString());
 
@@ -117,7 +122,7 @@ public class IoFragment extends Fragment {
                     Toast.makeText(ioFragmentLayout.getContext(),"录入成功", Toast.LENGTH_LONG).show();
 
                 } else {
-                    Toast.makeText(ioFragmentLayout.getContext(),"金额和备注不能为空！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ioFragmentLayout.getContext(),"金额和备注输入有误！", Toast.LENGTH_LONG).show();
                 }
 
 
@@ -127,6 +132,22 @@ public class IoFragment extends Fragment {
         return ioFragmentLayout;
     }
 
+    public boolean isDouble(String str)
+    {
+        try
+        {
+            Double.parseDouble(str);
+            return true;
+        }
+        catch(NumberFormatException ex){}
+        return false;
+    }
+
+    public boolean isDigit(String strNum) {
+        Pattern pattern = Pattern.compile("[0-9]{1,}");
+        Matcher matcher = pattern.matcher((CharSequence) strNum);
+        return matcher.matches();
+    }
     /**
      * 初始化各个控件
      */
